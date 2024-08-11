@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: nextcloud
+  annotations:
+    cert-manager.io/cluster-issuer: backend-certificate-manager
+spec:
+  tls:
+    - hosts:
+        - cloud.${domain}
+        - office.${domain}
+      secretName: letsencrypt-account-key
+  ingressClassName: nginx
+  rules:
+  - host: cloud.${domain}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nextcloud
+            port:
+              number: 80
+  - host: office.${domain}
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nextcloud-collabora
+              port:
+                number: 80
+
+
+
+

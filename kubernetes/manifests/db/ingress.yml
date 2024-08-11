@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: database
+  annotations:
+    cert-manager.io/cluster-issuer: backend-certificate-manager
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - db.${domain}
+      secretName: letsencrypt-account-key
+  rules:
+  - host: db.${domain}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pgadmin-service
+            port:
+              number: 80

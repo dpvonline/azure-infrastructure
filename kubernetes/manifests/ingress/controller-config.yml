@@ -1,0 +1,13 @@
+controller:
+  replicaCount: 1
+#  priorityClassName: system-node-critical
+  service:
+    externalTrafficPolicy: Local
+    loadBalancerIP: ${loadbalancer_ip}
+    annotations:
+      "service.beta.kubernetes.io/azure-load-balancer-resource-group": ${resource_group}
+      "service.beta.kubernetes.io/azure-load-balancer-ipv4": ${loadbalancer_ip}
+      "service.beta.kubernetes.io/azure-load-balancer-ipv6": ${loadbalancer_ip_v6}
+  config:
+    keep-alive: "120"
+

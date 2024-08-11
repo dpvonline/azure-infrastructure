@@ -1,0 +1,36 @@
+replicaCount: 1
+internalDatabase:
+  enabled: false
+ingress:
+  enabled: false
+externalDatabase:
+  enabled: true
+  type: postgresql
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-secret
+    usernameKey: DB_USER
+    passwordKey: DB_PASSWORD
+    hostKey: DB_HOST
+    databaseKey: DB_NAME
+persistence:
+  enabled: true
+  existingClaim: nextcloud-pvc
+nextcloud:
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-secret
+    usernameKey: NEXTCLOUD_USER
+    passwordKey: NEXTCLOUD_PW
+collabora:
+  enabled: true
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-secret
+    usernameKey: COLLABORA_USER
+    passwordKey: COLLABORA_PW
+#  collabora:
+#    aliasgroups: ${cloud_domain}
+#    server_name: ${collabora_domain}
+
+

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: aks-helloworld
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: config-vol
+            mountPath: /etc/nginx/
+      volumes:
+        - name: config-vol
+          configMap:
+            name: nginx-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf

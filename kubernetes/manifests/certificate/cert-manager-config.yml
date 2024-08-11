@@ -1,0 +1,13 @@
+crds:
+  enabled: true
+ingressShim:
+  defaultIssuerName: "backend-certificate-manager"
+  defaultIssuerKind: "ClusterIssuer"
+  defaultIssuerGroup: "cert-manager.io"
+resources:
+  requests:
+    cpu: "50m"
+    memory: "50Mi"
+  limits:
+    cpu: "100m"
+    memory: "100Mi"
