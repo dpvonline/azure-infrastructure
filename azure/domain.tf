@@ -82,3 +82,19 @@ resource "azurerm_dns_aaaa_record" "office_ipv6" {
   ttl                 = 60
   target_resource_id  = azurerm_public_ip.nginx_ip_v6.id
 }
+
+resource "azurerm_dns_a_record" "biber_ipv4" {
+  name                = "anmeldung"
+  zone_name           = azurerm_dns_zone.web_app.name
+  resource_group_name = azurerm_resource_group.infra.name
+  ttl                 = 60
+  target_resource_id  = azurerm_public_ip.nginx_ip_v4.id
+}
+
+resource "azurerm_dns_aaaa_record" "biber_ipv6" {
+  name                = "anmeldung"
+  zone_name           = azurerm_dns_zone.web_app.name
+  resource_group_name = azurerm_resource_group.infra.name
+  ttl                 = 60
+  target_resource_id  = azurerm_public_ip.nginx_ip_v6.id
+}

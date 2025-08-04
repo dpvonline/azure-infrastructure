@@ -15,11 +15,11 @@ resource "kubernetes_secret" "nextcloud_secret" {
   type = "Opaque"
   data = {
     DB_HOST        = "postgres-service.database.svc.cluster.local"
-    DB_NAME        = "nextcloud"
-    DB_USER        = "nextcloud"
+    DB_NAME        = var.DB_NEXTCLOUD_NAME
+    DB_USER        = var.DB_NEXTCLOUD_USER
     DB_PASSWORD    = var.DB_NEXTCLOUD_PW
     NEXTCLOUD_USER = var.NEXTCLOUD_USER
-    NEXTCLOUD_PW   = var.NEXTCLOUD_USER
+    NEXTCLOUD_PW   = var.NEXTCLOUD_PW
     COLLABORA_USER = var.COLLABORA_USER
     COLLABORA_PW   = var.COLLABORA_PW
   }

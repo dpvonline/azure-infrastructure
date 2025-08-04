@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: static-files-pvc
+  namespace: biber
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: azuredisk-premium-retain
+  resources:
+    requests:
+      storage: 5Gi

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: biber
+  annotations:
+    cert-manager.io/cluster-issuer: backend-certificate-manager
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - anmeldung.${domain}
+      secretName: letsencrypt-account-key
+  rules:
+  - host: anmeldung.${domain}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: biber-svc
+            port:
+              number: 80
