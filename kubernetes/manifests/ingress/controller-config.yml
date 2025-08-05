@@ -10,4 +10,5 @@ controller:
       "service.beta.kubernetes.io/azure-load-balancer-ipv6": ${loadbalancer_ip_v6}
   config:
     keep-alive: "120"
+    strict-validate-path-type: false
 
