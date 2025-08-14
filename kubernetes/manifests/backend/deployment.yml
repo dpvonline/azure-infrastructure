@@ -38,8 +38,7 @@ spec:
               subPath: default.conf
       volumes:
         - name: static-files
-          persistentVolumeClaim:
-            claimName: static-files-pvc
+          emptyDir: {}
         - name: nginx-config
           configMap:
             name: nginx-config
