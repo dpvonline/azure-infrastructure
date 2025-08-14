@@ -24,12 +24,3 @@ resource "helm_release" "ingress_config" {
     })
   ]
 }
-
-resource "kubernetes_manifest" "nginx_ingress" {
-  depends_on = [helm_release.ingress_config]
-  manifest = yamldecode(
-    templatefile("kubernetes/manifests/ingress/ingress.yml", {
-      domain = var.DOMAIN,
-    })
-  )
-}
