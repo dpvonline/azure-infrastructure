@@ -29,7 +29,7 @@ module "azure" {
   VM_SIZE      = "Standard_D2ads_v5"
   REGION       = var.REGION
   INFRA_NAME   = var.INFRA_NAME
-  BASE_VM_SIZE = "Standard_B2pls_v2"
+  BASE_VM_SIZE = "Standard_B2als_v2"
   DOMAIN       = var.DOMAIN
 }
 
