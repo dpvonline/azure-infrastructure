@@ -5,7 +5,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   dns_prefix                       = "k8s"
   private_cluster_enabled          = false
   sku_tier                         = "Free"
-  kubernetes_version               = "1.32.5"
+  kubernetes_version               = "1.32.6"
   automatic_upgrade_channel        = "stable"
   http_application_routing_enabled = false
 

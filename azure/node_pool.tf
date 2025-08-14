@@ -6,7 +6,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "np1" {
   priority              = "Spot"
   spot_max_price        = -1
   mode                  = "User"
-  orchestrator_version  = "1.32.5"
+  orchestrator_version  = "1.32.6"
   os_disk_type          = "Managed"
   os_sku                = "AzureLinux"
   scale_down_mode       = "Delete"
