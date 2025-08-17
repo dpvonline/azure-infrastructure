@@ -25,19 +25,15 @@ resource "azurerm_monitor_data_collection_rule" "aks" {
 
   data_sources {
     extension {
-      name           = "ContainerInsightsExtension"
+      name           =  "ContainerInsightsExtension"
       streams = ["Microsoft-ContainerInsights-Group-Default"]
       extension_name = "ContainerInsights"
       extension_json = jsonencode({
         dataCollectionSettings = {
           enableContainerLogV2   = true
-          interval               = "5m"
-          namespaceFilteringMode = "Exclude"
-          namespaces = [
-            "kube-system",
-            "gatekeeper-system",
-            "azure-arc"
-          ]
+          interval               = "15m"
+          namespaceFilteringMode = "Include"
+          namespaces = ["nextcloud", "keycloak", "database", "biber", "confluence"]
         }
       })
     }

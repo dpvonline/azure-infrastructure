@@ -20,15 +20,15 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     os_sku                       = "AzureLinux"
     ultra_ssd_enabled            = false
     zones = ["1",]
-    os_disk_size_gb              = 64
+    os_disk_size_gb              = 32
     os_disk_type                 = "Managed"
     only_critical_addons_enabled = false
     temporary_name_for_rotation  = "test"
     node_public_ip_enabled       = false
 
     upgrade_settings {
-      max_surge = "10%"
-      drain_timeout_in_minutes = 5
+      max_surge                     = "10%"
+      drain_timeout_in_minutes      = 5
       node_soak_duration_in_minutes = 0
     }
   }
@@ -37,6 +37,8 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     balance_similar_node_groups      = true
     max_unready_nodes                = 1
     scale_down_utilization_threshold = "0.5"
+    scale_down_delay_after_add       = "10m"
+    expander                         = "least-waste"
     empty_bulk_delete_max            = "1"
     skip_nodes_with_system_pods      = false
   }
@@ -62,8 +64,8 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 
   network_profile {
-    network_plugin      = "kubenet"
-    load_balancer_sku   = "standard"
+    network_plugin    = "kubenet"
+    load_balancer_sku = "standard"
     ip_versions = ["IPv4", "IPv6"]
     load_balancer_profile {
       outbound_ip_address_ids = [azurerm_public_ip.nginx_ip_v4.id, azurerm_public_ip.nginx_ip_v6.id]
@@ -78,7 +80,14 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   monitor_metrics {}
 
   workload_autoscaler_profile {
-    keda_enabled                    = true
+    keda_enabled                    = false
     vertical_pod_autoscaler_enabled = false
+  }
+
+  storage_profile {
+    disk_driver_enabled     = true
+    file_driver_enabled     = false
+    blob_driver_enabled     = false
+    snapshot_controller_enabled = false
   }
 }

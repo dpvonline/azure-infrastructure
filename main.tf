@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.26.0"
+      version = ">= 4.40.0"
     }
     helm = {
       source  = "hashicorp/helm"
@@ -10,7 +10,7 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">= 2.31.0"
+      version = ">= 2.28.0"
     }
   }
 }
@@ -26,10 +26,10 @@ provider "azurerm" {
 
 module "azure" {
   source       = "./azure"
-  VM_SIZE      = "Standard_D2ads_v5"
+  VM_SIZE      = var.VM_SIZE
   REGION       = var.REGION
   INFRA_NAME   = var.INFRA_NAME
-  BASE_VM_SIZE = "Standard_B2als_v2"
+  BASE_VM_SIZE = var.BASE_VM_SIZE
   DOMAIN       = var.DOMAIN
 }
 
