@@ -14,6 +14,10 @@ variable "DOMAIN" {
   type = string
 }
 
+variable "PROD_DOMAIN" {
+  type = string
+}
+
 variable "DEFAULT_EMAIL" {
   type = string
 }

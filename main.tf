@@ -84,4 +84,5 @@ module "kubernetes" {
   EMAIL_USE_SSL        = var.EMAIL_USE_SSL
   EMAIL_USE_TLS        = var.EMAIL_USE_TLS
   DJANGO_SECRET_KEY    = var.DJANGO_SECRET_KEY
+  PROD_DOMAIN          = var.PROD_DOMAIN
 }
