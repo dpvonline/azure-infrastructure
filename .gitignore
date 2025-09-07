@@ -39,3 +39,6 @@ terraform.rc
 
 # Jetbrains IDE
 .idea
+
+# Kubernetes
+kubeconfig.*
