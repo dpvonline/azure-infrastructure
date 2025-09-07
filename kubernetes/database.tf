@@ -2,7 +2,7 @@ resource "kubernetes_namespace" "database" {
   metadata {
     name = "database"
     annotations = {
-      "scheduler.alpha.kubernetes.io/defaultTolerations" = "[{\"Key\": \"kubernetes.azure.com/scalesetpriority\", \"Operator\": \"Equal\", \"Value\": \"spot\", \"Effect\": \"NoSchedule\"}]",
+      "scheduler.alpha.kubernetes.io/defaultTolerations" = "[{\"Key\": \"CriticalAddonsOnly\", \"Operator\": \"Exists\"}, {\"Key\": \"only\", \"Operator\":\"Equal\", \"Value\":\"special\", \"Effect\":\"NoSchedule\"},{\"Key\": \"kubernetes.azure.com/scalesetpriority\", \"Operator\": \"Equal\", \"Value\": \"spot\", \"Effect\": \"NoSchedule\"}]",
     }
   }
 }
@@ -45,6 +45,16 @@ resource "kubernetes_manifest" "postgres_deployment" {
     file("kubernetes/manifests/db/postgres-deployment.yml")
   )
 }
+
+# resource "kubernetes_manifest" "postgres_deployment2" {
+#   depends_on = [
+#     kubernetes_secret.postgres_secret,
+#     kubernetes_manifest.postgres_pvc,
+#   ]
+#   manifest = yamldecode(
+#     file("kubernetes/manifests/db/postgres-tmp.yml")
+#   )
+# }
 
 resource "kubernetes_manifest" "database_service" {
   manifest = yamldecode(

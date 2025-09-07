@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pg-recovery-helper
+  namespace: database
+spec:
+  restartPolicy: Never
+  containers:
+    - name: helper
+      image: postgres:17
+      command: ["sleep","infinity"]
+      envFrom:
+        - secretRef:
+            name: postgres-secret
+      volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-data
+          subPath: data
+  volumes:
+    - name: postgres-data
+      persistentVolumeClaim:
+        claimName: postgres-pvc
