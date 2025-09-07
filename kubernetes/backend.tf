@@ -44,12 +44,6 @@ resource "kubernetes_manifest" "nginx-config" {
   )
 }
 
-resource "kubernetes_manifest" "backend-pvc" {
-  manifest = yamldecode(
-    file("kubernetes/manifests/backend/pvc.yml")
-  )
-}
-
 resource "kubernetes_manifest" "backend-deployment" {
   manifest = yamldecode(
     file("kubernetes/manifests/backend/deployment.yml")
