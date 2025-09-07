@@ -19,7 +19,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     #     enable_host_encryption = true
     os_sku                       = "AzureLinux"
     ultra_ssd_enabled            = false
-    zones = ["1",]
+    zones = ["3",]
     os_disk_size_gb              = 32
     os_disk_type                 = "Managed"
     only_critical_addons_enabled = false

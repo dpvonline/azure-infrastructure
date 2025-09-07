@@ -31,6 +31,7 @@ module "azure" {
   INFRA_NAME   = var.INFRA_NAME
   BASE_VM_SIZE = var.BASE_VM_SIZE
   DOMAIN       = var.DOMAIN
+  VM_SIZE_2    = var.VM_SIZE_2
 }
 
 locals {
