@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nextcloud-pvc
+  name: nextcloud-data
   namespace: nextcloud
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: azuredisk-standard-retain
+  storageClassName: nextcloud-azuredisk
   resources:
     requests:
       storage: 64Gi

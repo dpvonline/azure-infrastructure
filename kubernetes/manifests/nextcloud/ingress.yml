@@ -5,6 +5,10 @@ metadata:
   namespace: nextcloud
   annotations:
     cert-manager.io/cluster-issuer: backend-certificate-manager
+    nginx.ingress.kubernetes.io/proxy-body-size: "10g"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/client-body-buffer-size: "100m"
 spec:
   tls:
     - hosts:

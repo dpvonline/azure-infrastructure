@@ -1,11 +1,10 @@
-kind: StorageClass
 apiVersion: storage.k8s.io/v1
+kind: StorageClass
 metadata:
-  name: azuredisk-standard-retain
+  name: nextcloud-azuredisk
 provisioner: disk.csi.azure.com
-reclaimPolicy: Retain
-volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
 parameters:
-  storageaccounttype: Standard_LRS
+  skuname: Standard_LRS
   kind: Managed
