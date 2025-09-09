@@ -21,7 +21,7 @@ resource "kubernetes_secret" "keycloak_secret" {
     KC_DB_URL         = "jdbc:postgresql://postgres-service.database.svc.cluster.local:5432/keycloak"
     KC_DB_USERNAME    = "keycloak"
     KC_DB_PASSWORD    = var.DB_KEYCLOAK_PASSWORD
-    KC_HOSTNAME       = "https://auth.${var.DOMAIN}"
+    KC_HOSTNAME       = "https://auth.${var.PROD_DOMAIN}"
     KC_HEALTH_ENABLED = "true"
     KC_HOSTNAME_DEBUG = "true"
   }
