@@ -98,6 +98,18 @@ variable "NEXTCLOUD_PW" {
   type = string
 }
 
+variable "DB_PGADMIN_USER" {
+  type = string
+}
+
+variable "DB_PGADMIN_PASSWORD" {
+  type = string
+}
+
+variable "REDIS_PASSWORD" {
+  type = string
+}
+
 variable "COLLABORA_USER" {
   type = string
 }

@@ -58,6 +58,18 @@ variable "PGADMIN_PASSWORD" {
   type = string
 }
 
+variable "DB_PGADMIN_USER" {
+  type = string
+}
+
+variable "DB_PGADMIN_PASSWORD" {
+  type = string
+}
+
+variable "REDIS_PASSWORD" {
+  type = string
+}
+
 variable "NEXTCLOUD_USER" {
   type = string
 }
