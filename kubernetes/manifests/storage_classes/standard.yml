@@ -1,8 +1,9 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nextcloud-azuredisk
+  name: standard-azuredisk
 provisioner: disk.csi.azure.com
+reclaimPolicy: Retain
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
 parameters:
