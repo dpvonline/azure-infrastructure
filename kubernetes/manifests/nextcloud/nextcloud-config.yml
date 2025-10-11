@@ -10,7 +10,7 @@ persistence:
   enabled: true
   existingClaim: nextcloud-data
   accessMode: ReadWriteOnce
-  size: 64Gi
+  size: 200Gi
 
 nextcloud:
   host: "${cloud_domain}"
@@ -36,10 +36,15 @@ externalDatabase:
 redis:
   enabled: false
 
+externalRedis:
+  enabled: true
+  host: ${redis_host}
+  port: ${redis_port}
+
 resources:
   requests:
-    cpu: "500m"
-    memory: "1Gi"
+    cpu: "1"
+    memory: "2Gi"
   limits:
     cpu: "2"
     memory: "4Gi"

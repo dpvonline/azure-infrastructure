@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: nextcloud-azuredisk
+  storageClassName: standard-azuredisk
   resources:
     requests:
-      storage: 64Gi
+      storage: 200Gi
