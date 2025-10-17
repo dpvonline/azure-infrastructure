@@ -23,7 +23,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "np1" {
   lifecycle {
     ignore_changes = [
       node_taints,
-      node_count
+      node_count,
+      orchestrator_version
     ]
   }
 }
@@ -55,7 +56,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "np2" {
   lifecycle {
     ignore_changes = [
       node_taints,
-      node_count
+      node_count,
+      orchestrator_version
     ]
   }
 }
