@@ -90,4 +90,10 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     blob_driver_enabled     = false
     snapshot_controller_enabled = false
   }
+
+  lifecycle {
+    ignore_changes = [
+      kubernetes_version
+    ]
+  }
 }
