@@ -15,22 +15,18 @@ resource "kubernetes_secret" "postgres_secret" {
   type = "Opaque"
   data = {
     POSTGRES_PASSWORD = var.DB_ROOT_PASSWORD
-    POSTGRES_DB = "postgres"
-    POSTGRES_USER = "postgres"
+    POSTGRES_DB       = "postgres"
+    POSTGRES_USER     = "postgres"
 
-    PGADMIN_DEFAULT_EMAIL = var.DEFAULT_EMAIL
-    PGADMIN_DEFAULT_PASSWORD = var.PGADMIN_PASSWORD
+    PGADMIN_DEFAULT_EMAIL             = var.DEFAULT_EMAIL
+    PGADMIN_DEFAULT_PASSWORD          = var.PGADMIN_PASSWORD
+    PGADMIN_CONFIG_MAX_LOGIN_ATTEMPTS = 10
+    # PGADMIN_CONFIG_DATABASE_URI       = format("postgresql://%s:%s@postgres-service.database.svc.cluster.local:5432/%s", var.DB_PGADMIN_USER, var.DB_PGADMIN_PASSWORD, var.DB_PGADMIN_USER)
   }
 }
 
-resource "kubernetes_manifest" "storageclass" {
-  manifest = yamldecode(
-    file("kubernetes/manifests/db/storageclass.yml")
-  )
-}
-
 resource "kubernetes_manifest" "postgres_pvc" {
-  depends_on = [kubernetes_namespace.database]
+  depends_on = [kubernetes_namespace.database, kubernetes_manifest.premium_storageclass]
   manifest = yamldecode(
     file("kubernetes/manifests/db/pvc.yml")
   )
@@ -45,16 +41,6 @@ resource "kubernetes_manifest" "postgres_deployment" {
     file("kubernetes/manifests/db/postgres-deployment.yml")
   )
 }
-
-# resource "kubernetes_manifest" "postgres_deployment2" {
-#   depends_on = [
-#     kubernetes_secret.postgres_secret,
-#     kubernetes_manifest.postgres_pvc,
-#   ]
-#   manifest = yamldecode(
-#     file("kubernetes/manifests/db/postgres-tmp.yml")
-#   )
-# }
 
 resource "kubernetes_manifest" "database_service" {
   manifest = yamldecode(
