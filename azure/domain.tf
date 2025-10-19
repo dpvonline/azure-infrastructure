@@ -11,7 +11,8 @@ locals {
     "cloud",
     "office",
     "anmeldung",
-    # "auth", # uncomment to enable
+    # "auth",
+    # "wiki",
   ]
 }
 

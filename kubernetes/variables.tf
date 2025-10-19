@@ -113,3 +113,19 @@ variable "EMAIL_USE_SSL" {
 variable "DJANGO_SECRET_KEY" {
   type = string
 }
+
+variable "DB_CONFLUENCE_NAME" {
+  type = string
+}
+
+variable "DB_CONFLUENCE_USER" {
+  type = string
+}
+
+variable "DB_CONFLUENCE_PASSWORD" {
+  type = string
+}
+
+variable "CONFLUENCE_LICENSE" {
+  type = string
+}

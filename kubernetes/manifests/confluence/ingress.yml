@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: wiki
+  annotations:
+    cert-manager.io/cluster-issuer: backend-certificate-manager
+spec:
+  tls:
+    - hosts:
+        - wiki.${domain}
+      secretName: letsencrypt-account-key
+  ingressClassName: nginx
+  rules:
+  - host: wiki.${domain}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: confluence-service
+            port:
+              number: 80
