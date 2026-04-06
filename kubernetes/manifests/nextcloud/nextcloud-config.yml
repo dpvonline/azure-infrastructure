@@ -8,9 +8,11 @@ service:
 
 persistence:
   enabled: true
-  existingClaim: nextcloud-data
-  accessMode: ReadWriteOnce
-  size: 200Gi
+  existingClaim: nextcloud-pvc
+  nextcloudData:
+    enabled: true
+    existingClaim: nextcloud-data-pvc
+
 
 nextcloud:
   host: "${cloud_domain}"
@@ -35,11 +37,6 @@ externalDatabase:
 
 redis:
   enabled: false
-
-externalRedis:
-  enabled: true
-  host: ${redis_host}
-  port: ${redis_port}
 
 resources:
   requests:

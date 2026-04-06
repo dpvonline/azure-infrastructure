@@ -29,22 +29,30 @@ resource "kubernetes_secret" "nextcloud_secret" {
     EMAIL_USE_TLS       = var.EMAIL_USE_TLS
     EMAIL_USE_SSL       = var.EMAIL_USE_SSL
     DEFAULT_FROM_EMAIL  = var.EMAIL_HOST_USER
+    MAIL_SECURE         = var.EMAIL_PORT == "465" ? "ssl" : "tls"
   }
 }
 
 resource "kubernetes_manifest" "pvc_nextcloud" {
-  depends_on = [kubernetes_manifest.standard_storageclass]
+  depends_on = [kubernetes_manifest.premium_storageclass]
   manifest = yamldecode(
     file("kubernetes/manifests/nextcloud/pvc.yml")
   )
 }
 
+resource "kubernetes_manifest" "pvc_data_nextcloud" {
+  depends_on = [kubernetes_manifest.azureblob_nfs_storageclass]
+  manifest = yamldecode(
+    file("kubernetes/manifests/nextcloud/pvc-data.yml")
+  )
+}
+
 resource "helm_release" "nextcloud" {
-  depends_on = [kubernetes_namespace.nextcloud, kubernetes_secret.nextcloud_secret, kubernetes_manifest.pvc_nextcloud]
+  depends_on = [kubernetes_namespace.nextcloud, kubernetes_secret.nextcloud_secret, kubernetes_manifest.pvc_nextcloud, kubernetes_manifest.pvc_data_nextcloud]
   namespace  = kubernetes_namespace.nextcloud.metadata[0].name
   chart      = "nextcloud"
   name       = "nextcloud"
-  version    = "7.0.4"
+  version    = "8.5.1"
   repository = "https://nextcloud.github.io/helm/"
   wait       = true
   timeout    = 900
@@ -54,10 +62,8 @@ resource "helm_release" "nextcloud" {
       cloud_domain     = "cloud.${var.PROD_DOMAIN}"
       collabora_domain = "office.${var.PROD_DOMAIN}"
       # SMTP-related values templated from Terraform vars
-      email_host     = var.EMAIL_HOST
-      email_user     = var.EMAIL_HOST_USER
-      email_password = var.EMAIL_HOST_PASSWORD
       email_port     = var.EMAIL_PORT
+      email_secure   = var.EMAIL_USE_TLS  ? "tls" : "ssl"
       # split address into local-part + domain for Nextcloud config
       email_from_localpart = split("@", var.EMAIL_HOST_USER)[0]
       email_domain         = split("@", var.EMAIL_HOST_USER)[1]
@@ -68,7 +74,7 @@ resource "helm_release" "nextcloud" {
 }
 
 resource "kubernetes_manifest" "nextcloud_ingress" {
-  depends_on = [helm_release.ingress_config]
+  depends_on = [helm_release.ingress_config, helm_release.nextcloud]
   manifest = yamldecode(
     templatefile("kubernetes/manifests/nextcloud/ingress.yml", {
       domain = var.DOMAIN,

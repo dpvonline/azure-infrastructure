@@ -2,7 +2,7 @@ resource "azurerm_virtual_network" "k8s-network" {
   name                = "k8s-network"
   location            = var.REGION
   resource_group_name = azurerm_resource_group.infra.name
-  address_space = ["192.168.0.0/16", "2404:f800:8000:122::/63"]
+  address_space       = ["192.168.0.0/16", "2404:f800:8000:122::/63"]
   encryption {
     enforcement = "AllowUnencrypted"
   }
@@ -12,7 +12,10 @@ resource "azurerm_subnet" "internal" {
   name                 = "internal"
   virtual_network_name = azurerm_virtual_network.k8s-network.name
   resource_group_name  = azurerm_resource_group.infra.name
-  address_prefixes = ["192.168.0.0/22", "2404:f800:8000:122::/64"]
+  address_prefixes     = ["192.168.0.0/22", "2404:f800:8000:122::/64"]
+  service_endpoints = [
+    "Microsoft.Storage"
+  ]
 }
 
 resource "azurerm_public_ip" "nginx_ip_v4" {

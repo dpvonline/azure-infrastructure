@@ -11,20 +11,19 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
 
   default_node_pool {
-    name                         = "system"
-    node_count                   = 1
-    vm_size                      = var.BASE_VM_SIZE
-    vnet_subnet_id               = azurerm_subnet.internal.id
+    name                 = "system"
+    node_count           = 1
+    vm_size              = var.BASE_VM_SIZE
+    vnet_subnet_id       = azurerm_subnet.internal.id
     auto_scaling_enabled = false
-    #     enable_host_encryption = true
     os_sku                       = "AzureLinux"
     ultra_ssd_enabled            = false
-    zones = ["3",]
+    zones                        = ["3", ]
     os_disk_size_gb              = 32
     os_disk_type                 = "Managed"
     only_critical_addons_enabled = false
     temporary_name_for_rotation  = "test"
-    node_public_ip_enabled       = false
+    node_public_ip_enabled       = true
 
     upgrade_settings {
       max_surge                     = "10%"
@@ -49,7 +48,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   maintenance_window {
     allowed {
-      day = "Tuesday"
+      day   = "Tuesday"
       hours = [2, 3, 4, 5, 6, 7, 8]
     }
   }
@@ -66,7 +65,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   network_profile {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"
-    ip_versions = ["IPv4", "IPv6"]
+    ip_versions       = ["IPv4", "IPv6"]
     load_balancer_profile {
       outbound_ip_address_ids = [azurerm_public_ip.nginx_ip_v4.id, azurerm_public_ip.nginx_ip_v6.id]
     }
@@ -85,9 +84,9 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 
   storage_profile {
-    disk_driver_enabled     = true
-    file_driver_enabled     = false
-    blob_driver_enabled     = false
+    disk_driver_enabled         = true
+    file_driver_enabled         = false
+    blob_driver_enabled         = true
     snapshot_controller_enabled = false
   }
 
