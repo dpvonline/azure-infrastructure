@@ -8,11 +8,9 @@ locals {
   dns_record_names = [
     "@",
     "db",
-    "cloud",
-    "office",
     "anmeldung",
-    # "auth",
-    # "wiki",
+    # "auth", "wiki", "cloud", "office": managed by dpvonline/azure-docker
+    # (terraform/dns.tf) — do not re-add here, two states would fight over them.
   ]
 }
 
